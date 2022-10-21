@@ -10,39 +10,37 @@
   <a href="javascript:;"><img src="https://img.shields.io/badge/PRs-welcome-green"></a>
   <a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/swift-5.0-orange.svg?style=flat"></a>
 <br/>
-</div>
 
-English | [简体中文](./README-zh_CN.md)
+</div>
 
 <br>
 
-## Introduction
+[English](./README.md) | 简体中文
+
+## 简介
 
 Authing - iOS SDK V3
 
-## Documentation
+## 文档
 
-[Click me for English documentation](https://docs.authing.cn/v3/reference/mobile/sdk-for-ios/)
+[中文文档请移步至这里查看](https://docs.authing.cn/v3/reference/mobile/sdk-for-ios/)
 
-## Compatibility Notes
-Minimum supported iOS versions, compiler version, Swift version: iOS 11.0, Xcode 13.4.1, Swift 5.6.
+## 常见问题
 
-## Questions
+如果需要在线技术支持，可访问 [官方论坛](https://forum.authing.cn/). 此仓库的 issue 仅用于上报 Bug 和提交新功能特性。
 
-For questions and support please use the [official forum](https://forum.authing.cn/). The issue list of this repo is exclusively for bug reports and feature requests.
-
-## Contribute
+## 贡献
 
 https://github.com/Authing/.github/blob/main/CONTRIBUTING.md
 
-## License
+## 开源许可
 
 [MIT](https://opensource.org/licenses/MIT)
 
 Copyright (c) 2019-present Authing
 
-## Get help
+## 获取帮助
 
-Contact our senior iOS developer via Wechat:
+若在接入过程中有任何疑问，请添加我们资深 iOS 工程师微信：
 
 <img width="120" src="./doc/images/jianan.png">
