@@ -155,7 +155,7 @@ public class Config: NSObject {
         var url = "https://console." + Authing.getHost() + "/api/v2/applications/" + self.appId + "/public-config"
 
         if Authing.getIsOnPremises() {
-            url = "https://" + Authing.getHost() + "/api/v2/applications/" + self.appId + "/public-config"
+            url = "\(Authing.getSchema())://" + Authing.getHost() + "/api/v2/applications/" + self.appId + "/public-config"
         }
         //        var componentsJson = NSDictionary()
         //        let dispatchGroup = DispatchGroup()
@@ -163,14 +163,15 @@ public class Config: NSObject {
         //        dispatchGroup.enter()
         //        dispathcQueue.async{
 //        var publicConfigJson = NSMutableDictionary()
-            AuthClient().request(config: nil, urlString: url, method: "get", body: nil) { res in
-                if (res.statusCode != 200) {
-                    ALog.e(Self.self, "error when getting public cofig:\(res.message!)")
-                }
+        AuthClient().request(config: nil, urlString: url, method: "get", body: nil) { res in
+            if (res.statusCode != 200) {
+                ALog.e(Self.self, "error when getting public cofig:\(res.message!)")
+            }
 //                publicConfigJson = jsonData?.mutableCopy() as? NSMutableDictionary ?? [:]
 //                dispatchGroup.leave()
-                self.fireCallback(res.data)
-            }
+            self.fireCallback(res.data)
+        }
+    
 //        }
 //        dispatchGroup.enter()
 //        dispathcQueue.async{
