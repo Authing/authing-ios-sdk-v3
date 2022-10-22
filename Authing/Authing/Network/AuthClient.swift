@@ -78,7 +78,7 @@ public class AuthClient: Client {
     
     public func registerByEmailCode(email: String, passCode: String, _ options: RegisterOptions? = nil, completion: @escaping(Response) -> Void) {
         let body: NSMutableDictionary = ["connection": Connection.passcode.rawValue,
-                                  "passcodePayload": ["email": email, "passCode": passCode]]
+                                  "passCodePayload": ["email": email, "passCode": passCode]]
         options?.setValues(body: body)
         post("/api/v3/signup", body, completion: completion)
     }
@@ -89,7 +89,7 @@ public class AuthClient: Client {
             payload.setValue(code, forKey: "phoneCountryCode")
         }
         let body: NSMutableDictionary = ["connection": Connection.passcode.rawValue,
-                                  "passcodePayload": payload]
+                                  "passCodePayload": payload]
         options?.setValues(body: body)
         post("/api/v3/signup", body, completion: completion)
     }
@@ -109,14 +109,18 @@ public class AuthClient: Client {
         let body: NSMutableDictionary = ["connection": Connection.password.rawValue,
                                   "passwordPayload": ["email": email, "password": encryptedPassword]]
         options?.setValues(body: body)
-        post("/api/v3/signin", body, completion: completion)
+        post("/api/v3/signin", body) { res in
+            self.createUserInfo(nil, res: res, completion: completion)
+        }
     }
     
     public func loginByEmailCode(email: String, passCode: String, _ options: LoginOptions? = nil, completion: @escaping(Response) -> Void) {
         let body: NSMutableDictionary = ["connection": Connection.passcode.rawValue,
                                   "passCodePayload": ["email": email, "passCode": passCode]]
         options?.setValues(body: body)
-        post("/api/v3/signin", body, completion: completion)
+        post("/api/v3/signin", body) { res in
+            self.createUserInfo(nil, res: res, completion: completion)
+        }
     }
 
     public func loginByPhoneCode(phoneCountryCode: String? = nil, phone: String, passCode: String, _ options: LoginOptions? = nil, completion: @escaping(Response) -> Void) {
@@ -127,7 +131,9 @@ public class AuthClient: Client {
         let body: NSMutableDictionary = ["connection": Connection.passcode.rawValue,
                                   "passCodePayload": payload]
         options?.setValues(body: body)
-        post("/api/v3/signin", body, completion: completion)
+        post("/api/v3/signin", body) { res in
+            self.createUserInfo(nil, res: res, completion: completion)
+        }
     }
     
     public func loginByUsername(username: String, password: String, _ options: LoginOptions? = nil, completion: @escaping(Response) -> Void) {
@@ -135,7 +141,9 @@ public class AuthClient: Client {
         let body: NSMutableDictionary = ["connection": Connection.password.rawValue,
                                   "passwordPayload": ["username": username, "password": encryptedPassword]]
         options?.setValues(body: body)
-        post("/api/v3/signin", body, completion: completion)
+        post("/api/v3/signin", body) { res in
+            self.createUserInfo(nil, res: res, completion: completion)
+        }
     }
     
     public func loginByAccount(account: String, password: String, _ options: LoginOptions? = nil, completion: @escaping(Response) -> Void) {
@@ -143,7 +151,9 @@ public class AuthClient: Client {
         let body: NSMutableDictionary = ["connection": Connection.password.rawValue,
                                   "passwordPayload": ["account": account, "password": encryptedPassword]]
         options?.setValues(body: body)
-        post("/api/v3/signin", body, completion: completion)
+        post("/api/v3/signin", body) { res in
+            self.createUserInfo(nil, res: res, completion: completion)
+        }
     }
 
     //MARK: ---------- Social ----------
@@ -188,7 +198,9 @@ public class AuthClient: Client {
                 
             }
             
-            self.post("/api/v3/signin-by-mobile", body, completion: completion)
+            self.post("/api/v3/signin-by-mobile", body) { res in
+                self.createUserInfo(nil, res: res, completion: completion)
+            }
         }
     }
     
@@ -210,21 +222,23 @@ public class AuthClient: Client {
                                              "yidunPayload": ["token": token,
                                                               "accessToken": accessToken]]
             options?.setValues(body: body)
-            self.post("/api/v3/signin-by-mobile", body, completion: completion)
+            self.post("/api/v3/signin-by-mobile", body) { res in
+                self.createUserInfo(nil, res: res, completion: completion)
+            }
         }
     }
     
     //MARK: ---------- Send SMS && Send email ----------
-    public func sendSms(phone: String, phoneCountryCode: String? = nil, channel: String, completion: @escaping(Response) -> Void) {
-        let body: NSMutableDictionary = ["phoneNumber": phone, "channel": channel]
+    public func sendSms(phone: String, phoneCountryCode: String? = nil, channel: Channel, completion: @escaping(Response) -> Void) {
+        let body: NSMutableDictionary = ["phoneNumber": phone, "channel": channel.rawValue]
         if phoneCountryCode != nil {
             body.setValue(phoneCountryCode, forKey: "phoneCountryCode")
         }
         post("/api/v3/send-sms", body, completion: completion)
     }
     
-    public func sendEmail(email: String, channel: String, completion: @escaping(Response) -> Void) {
-        let body: NSDictionary = ["email": email, "channel": channel]
+    public func sendEmail(email: String, channel: Channel, completion: @escaping(Response) -> Void) {
+        let body: NSDictionary = ["email": email, "channel": channel.rawValue]
         post("/api/v3/send-email", body, completion: completion)
     }
     
@@ -242,14 +256,39 @@ public class AuthClient: Client {
     }
     
     //MARK: ---------- User ----------
+
+//    public func createUserInfo(_ code: Int, _ message: String?, _ data: NSDictionary?, completion: @escaping(Int, String?, UserInfo?) -> Void) {
+//        createUserInfo(nil, code, message, data, completion: completion)
+//    }
+        
+    public func createUserInfo(_ user: UserInfo?, res: Response, completion: @escaping(Response) -> Void) {
+        let userInfo = user ?? UserInfo()
+        if res.statusCode == 200 {
+            userInfo.parse(data: res.data)
+            
+            // only save user for 'root', otherwise we might be in console
+            if config == nil || config?.appId == Authing.getAppId() {
+                Authing.saveUser(userInfo)
+            } else {
+                ALog.i(Self.self, "requesting app ID: \(config!.appId ?? "") root app ID: \(Authing.getAppId())")
+            }
+            
+            completion(res)
+        } else if res.apiCode == EC_MFA_REQUIRED {
+            Authing.saveUser(userInfo)
+            userInfo.mfaData = res.data
+            completion(res)
+        } else if res.apiCode == EC_FIRST_TIME_LOGIN {
+            userInfo.firstTimeLoginToken = res.data?["token"] as? String
+            completion(res)
+        } else {
+            completion(res)
+        }
+    }
+    
     public func getProfile(customData: Bool? = false, identities: Bool? = false, departmentIds: Bool? = false, completion: @escaping(Response) -> Void) {
         get("/api/v3/get-profile?withCustomData=\(customData ?? false)&withIdentities=\(identities ?? false)&withDepartmentIds=\(departmentIds ?? false)") { res in
-            if res.statusCode == 200 {
-                let userInfo = UserInfo()
-                userInfo.parse(data: res.data)
-                Authing.saveUser(userInfo)
-            }
-            completion(Response(res.statusCode, res.apiCode, res.message, res.data))
+            self.createUserInfo(nil, res: res, completion: completion)
         }
     }
     
@@ -319,7 +358,7 @@ public class AuthClient: Client {
             body.setValue(oldEmailPassCode, forKey: "oldEmailPassCode")
         }
         
-        let dicBody: NSMutableDictionary = ["verifyMethod": "EMAIL_PASSCODE", "emailPasscodePayload": body]
+        let dicBody: NSMutableDictionary = ["verifyMethod": "EMAIL_PASSCODE", "emailPassCodePayload": body]
 
         post("/api/v3/verify-update-email-request", dicBody) { res in
             if res.statusCode == 200 {

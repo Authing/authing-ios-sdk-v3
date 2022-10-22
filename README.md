@@ -7,16 +7,14 @@
 <div align="center">
   <a href="https://forum.authing.cn/" target="_blank"><img src="https://img.shields.io/badge/chat-forum-blue" /></a>
   <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-success" alt="License"></a>
-  <a href="javascript:;"><img src="https://img.shields.io/badge/PRs-welcome-green"></a>
-  <a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/swift-5.0-orange.svg?style=flat"></a>
+
+<a href="https://developer.apple.com/swift/"><img src="https://img.shields.io/badge/swift-5.0-orange.svg?style=flat"></a>
 <br/>
 </div>
 
 English | [简体中文](./README-zh_CN.md)
 
-<br>
-
-## Introduction
+## Introduction 
 
 Authing - iOS SDK V3
 

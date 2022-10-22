@@ -11,7 +11,6 @@ public class AuthOptions: NSObject {
     
     public var context: String?
     public var passwordEncryptType: EncryptType? = .NONE
-    public var clientIp: String?
     public override init() { }
 }
 
@@ -21,7 +20,6 @@ public class LoginOptions: AuthOptions {
     public var tenantId: String?
     public var customData: NSDictionary?
     public var autoRegister: Bool?
-    public var captchaCode: Bool?
     public override init() { }
     
     public func setValues(body: NSMutableDictionary){
@@ -34,9 +32,6 @@ public class LoginOptions: AuthOptions {
         }
         if let autoRegister = self.autoRegister {
             optionsDic.setValue(autoRegister, forKey: "autoRegister")
-        }
-        if let captchaCode = self.captchaCode {
-            optionsDic.setValue(captchaCode, forKey: "captchaCode")
         }
         if let passwordEncryptType = self.passwordEncryptType {
             optionsDic.setValue(passwordEncryptType.rawValue, forKey: "passwordEncryptType")
@@ -70,8 +65,9 @@ public class RegisterOptions: AuthOptions {
         if let context = self.context {
             optionsDic.setValue(context, forKey: "context")
         }
-
-        body.setValue(optionsDic, forKey: "options")
+        if optionsDic.count != 0 {
+            body.setValue(optionsDic, forKey: "options")
+        }
         if let profile = self.profile {
             body.setValue(profile, forKey: "profile")
         }
