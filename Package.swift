@@ -18,7 +18,7 @@ let package = Package(
         .binaryTarget(
             name: "Authing",
             url: "https://github.com/Authing/authing-ios-sdk-v3/releases/download/1.0.0/Authing.xcframework.zip",
-            checksum: "55e87251a8affdf0bb81dc2b33070c53fb0c8149c3661d00ffdb2402749d7f23"
+            checksum: "a5606e64d470eef06771fae771892e44de0e1dd589039411caaa600fc9ec8e57"
         )
     ]
 )

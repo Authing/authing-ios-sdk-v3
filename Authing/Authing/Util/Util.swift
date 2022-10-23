@@ -27,9 +27,9 @@ public enum ErrorCode: Int {
         case .socialLogin:
             return "Social login failed"
         case .user:
-            return "user is nil"
+            return "User is nil"
         case .exchangeToken:
-            return "exchangeToken is nil"
+            return "ExchangeToken is nil"
         }
     }
 }
