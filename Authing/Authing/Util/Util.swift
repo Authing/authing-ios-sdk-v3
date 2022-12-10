@@ -164,15 +164,16 @@ public class Util {
             return Data(bytes: keyBuffer, count: keySize).base64EncodedString()
             
         } else if type == .SM2 {
-            
+                        
             let data = message.data(using: .utf8)
-            let base64Str = data?.base64EncodedString() ?? ""
+            let base64Str = data?.base64EncodedString(options: NSData.Base64EncodingOptions.init(rawValue: 0)) ?? ""
             //先对明文进行base64加密，再用GMSm2Utils 对其进行sm2加密，返回asn1编码格式的密文
             let encode = GMSm2Utils.encryptText(base64Str, publicKey: Authing.getSM2PublicKey()) ?? ""
             //把asn1编码格式的密文的 encode 解码成C1C3C2的密文字符串 = c1c3c2
             let c1c3c2 = GMSm2Utils.asn1Decode(toC1C3C2: encode) ?? ""
             //再把c1c3c2这个字符串转成 C1C2C3 模式的密文字符串 = c1c2c3 ，这个可以直接传给java端，用上面的java端实现的sm2Util进行解密
             let c1c2c3 = GMSm2Utils.convertC1C3C2(toC1C2C3: c1c3c2, hasPrefix: false) ?? ""
+            
             return "04" + c1c2c3
         } else {
             

@@ -26,6 +26,8 @@ public enum Channel: String {
     case complete_phone = "CHANNEL_COMPLETE_PHONE"
     case identity_verification = "CHANNEL_IDENTITY_VERIFICATION"
     case delete_account = "CHANNEL_DELETE_ACCOUNT"
+    case bind_email = "CHANNEL_BIND_EMAIL"
+    case unbind_email = "CHANNEL_UNBIND_EMAIL"
 }
 
 public enum SocialConnection: String {
@@ -305,8 +307,8 @@ public class AuthClient: Client {
         post("/api/v3/bind-phone", body, completion: completion)
     }
     
-    public func unbindPhone(completion: @escaping(Response) -> Void) {
-        post("/api/v3/unbind-phone", [:], completion: completion)
+    public func unbindPhone(passCode: String, completion: @escaping(Response) -> Void) {
+        post("/api/v3/unbind-phone", ["passCode": passCode], completion: completion)
     }
     
     public func updatePhone(newPhoneCountryCode: String? = nil, newPhoneNumber: String, newPhonePassCode: String, oldPhoneCountryCode: String? = nil, oldPhoneNumber: String? = nil, oldPhonePassCode: String? = nil, completion: @escaping(Response) -> Void) {
@@ -344,8 +346,8 @@ public class AuthClient: Client {
         post("/api/v3/bind-email", body, completion: completion)
     }
     
-    public func unbindEmail(completion: @escaping(Response) -> Void) {
-        post("/api/v3/unbind-email", [:], completion: completion)
+    public func unbindEmail(passCode: String, completion: @escaping(Response) -> Void) {
+        post("/api/v3/unbind-email", ["passCode": passCode], completion: completion)
     }
     
     public func updateEmail(newEmail: String, newEmailPassCode: String, oldEmail: String? = nil, oldEmailPassCode: String? = nil, completion: @escaping(Response) -> Void) {
