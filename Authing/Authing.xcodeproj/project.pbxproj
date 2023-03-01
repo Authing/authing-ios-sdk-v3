@@ -50,6 +50,7 @@
 		A828C1B328DB3902001E78D0 /* Authing.h in Headers */ = {isa = PBXBuildFile; fileRef = A828C1A728DB3902001E78D0 /* Authing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A8416AAE28DD91D600480FE4 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8416AAD28DD91D600480FE4 /* Client.swift */; };
 		A8416AB128DDB73700480FE4 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8416AB028DDB73700480FE4 /* Response.swift */; };
+		A8796AFA29AF380C007033E5 /* AuthingWebsocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8796AF929AF380C007033E5 /* AuthingWebsocketClient.swift */; };
 		A89FCE8528E1BE8300B2F347 /* AuthOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89FCE8428E1BE8300B2F347 /* AuthOptions.swift */; };
 		A8AB048028DC63B300530C86 /* Authing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB047F28DC63B300530C86 /* Authing.swift */; };
 		A8AB048228DC63C400530C86 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AB048128DC63C400530C86 /* AuthClient.swift */; };
@@ -106,6 +107,7 @@
 		A828C1B128DB3902001E78D0 /* AuthingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthingTests.swift; sourceTree = "<group>"; };
 		A8416AAD28DD91D600480FE4 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		A8416AB028DDB73700480FE4 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		A8796AF929AF380C007033E5 /* AuthingWebsocketClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthingWebsocketClient.swift; sourceTree = "<group>"; };
 		A89FCE8428E1BE8300B2F347 /* AuthOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthOptions.swift; sourceTree = "<group>"; };
 		A8AB047F28DC63B300530C86 /* Authing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authing.swift; sourceTree = "<group>"; };
 		A8AB048128DC63C400530C86 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				A8416AAD28DD91D600480FE4 /* Client.swift */,
 				A8AB048128DC63C400530C86 /* AuthClient.swift */,
 				A89FCE8428E1BE8300B2F347 /* AuthOptions.swift */,
+				A8796AF929AF380C007033E5 /* AuthingWebsocketClient.swift */,
 				A8416AB028DDB73700480FE4 /* Response.swift */,
 			);
 			path = Network;
@@ -455,6 +458,7 @@
 				A8416AAE28DD91D600480FE4 /* Client.swift in Sources */,
 				A8AB048D28DC668A00530C86 /* Config.swift in Sources */,
 				A8AB048B28DC668A00530C86 /* UserManager.swift in Sources */,
+				A8796AFA29AF380C007033E5 /* AuthingWebsocketClient.swift in Sources */,
 				A8AB049628DC672200530C86 /* config.swift in Sources */,
 				A8AB049B28DC675900530C86 /* Util.swift in Sources */,
 				A8AB048C28DC668A00530C86 /* CacheManager.swift in Sources */,

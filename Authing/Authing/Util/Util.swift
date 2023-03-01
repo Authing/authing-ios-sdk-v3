@@ -81,7 +81,7 @@ public class Util {
         var result: AnyObject?
         let status = SecItemCopyMatching(query, &result)
         if (status != 0) {
-            print("Try get uuid from keychain operation finished with status: \(status)")
+            ALog.d(AuthClient.self, "Try get uuid from keychain operation finished with status: \(status)")
         }
         if (result == nil) {
             return nil

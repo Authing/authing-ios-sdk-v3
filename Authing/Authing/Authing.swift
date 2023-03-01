@@ -30,8 +30,10 @@ public class Authing: NSObject {
         case notify_lark_receive = "LarkReceiveNotificationName"
     }
     
+    private static var debugMode: Bool = false
     private static var sSchema = "https"
     private static var sHost = "authing.cn"
+    private static var sWebsocketHost = "wss://events.authing.com"
     private static var sAppId = ""
     private static var isOnPremises = false
     private static var sRSAPublicKey = DEFAULT_RSA_PUBLIC_KEY
@@ -88,6 +90,15 @@ public class Authing: NSObject {
         }
     }
     
+    @objc public static func setWebsocketHost(websocketHost: String) {
+        sWebsocketHost = websocketHost
+    }
+    
+    @objc public static func getWebsocketHost() -> String {
+        return sWebsocketHost
+    }
+    
+    
     @objc public static func getConfig(completion: @escaping(Config?)->Void) {
         if let c = sConfig {
             c.getConfig(completion: completion)
@@ -121,4 +132,13 @@ public class Authing: NSObject {
         // TODO save to user defaults then Core Data
         UserManager.saveUser(sCurrentUser)
     }
+    
+    @objc public static func setDebugMode(open: Bool) {
+        debugMode = open
+    }
+    
+    @objc public static func getDebugMode() -> Bool {
+        return  debugMode
+    }
+    
 }
