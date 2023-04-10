@@ -811,7 +811,7 @@ public class AuthClient: Client {
     }
     
     //MARK: ---------- subEvent ----------
-    public func subEvent(eventCode: String, completion: @escaping (String?) -> Void) {
+    public func subEvent(eventCode: String, completion: @escaping (Int, String?) -> Void) {
         if let currentUser = Authing.getCurrentUser(),
            let token = currentUser.accessToken {
             let eventUri = "\(Authing.getWebsocketHost())/events/v1/authentication/sub?code=\(eventCode)&token=\(token)"
